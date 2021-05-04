@@ -34,7 +34,7 @@ def registration_view(request):
         return Response(msg)
 
 @api_view(['POST'],)
-@authentication_classes([TokenAuthentication])
+@authentication_classes([TokenAuthentication,BasicAuthentication])
 @permission_classes([AllowAny])
 def logout(request):
     if request.method == "POST":
@@ -53,7 +53,7 @@ def logout(request):
 
 
 @api_view(['GET','POST','PATCH','DELETE','PUT'])
-@authentication_classes([BasicAuthentication])
+@authentication_classes([BasicAuthentication,TokenAuthentication])
 @permission_classes([IsAuthenticated,IsAuthenticatedOrReadOnly])
 def book_api(request,pk=None):
     if request.method == "GET":
