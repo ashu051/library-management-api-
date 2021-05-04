@@ -187,14 +187,13 @@ def fav_api(request,pk=None):
     if request.method == "POST":
         print('---------------------------------------------------------------------------')
         print(request.data)
-        request.data._mutable = True
         # request.data['book'] = int(request.data['book'])
         # request.data['user'] = int(request.data['user'])
         # print(type(request.data['user']))
         print(type(request.user.id))
-        request.data['user'] = int(request.data['user'])
+        # request.data['user'] = int(request.data['user'])
         iscorrectuser = request.data['user'] 
-        if iscorrectuser == request.user.id:
+        if iscorrectuser == str(request.user.id):
             serializer = FavouriteSerializer(data=request.data)
             print(serializer)
             if serializer.is_valid():
