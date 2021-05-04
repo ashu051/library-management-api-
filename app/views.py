@@ -62,6 +62,8 @@ def book_api(request,pk=None):
         id = pk
         if id is not None:
             stu = Book.objects.get(id=id)
+            print('00000000000000000000000000000000000000000000000000000000000000000000000000000000000')
+            print(stu)
             serializer  = BookSerializer(stu)
             return Response(serializer.data)
         else:
@@ -158,18 +160,27 @@ def fav_api(request,pk=None):
         print(request.user)
         id = pk
         if id is not None:
-            stu = Favourite.objects.get(id=id)
+            stu = Favourite.objects.get(id=pk)
+            stu2=Favourite.objects.filter(user=request.user)
+            countforsry=0
+            for s in stu2:
+                if s.id == stu.id :
+                    countforsry=1
+                    break
             serializer  = FavouriteSerializer(stu)
-            if len(stu) == 0:
+            print("77777777777777777777777777777777777777777777777777777777777777777777777777777777777777")
+            print(stu)
+            if countforsry == 0:
                 msg={'msg':" apka favourite abhi koi  nhi hai phle kuch add kro phir dekho"}
                 return Response(msg)
             return Response(serializer.data)
         else:
             print(request.user)
             stu=Favourite.objects.filter(user=request.user)
-            print(stu)
+            for s in stu:
+                print(s.id)
             serializer  = FavouriteSerializer(stu,many=True)
-            if len(stu) == 0:
+            if stu == None:
                 msg={'msg':" apka favourite abhi nhi hai kuch phle add kro phir dekho"}
                 return Response(msg)
             return Response(serializer.data)    
