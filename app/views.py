@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view, permission_classes,authenticatio
 from .serializers import   BookSerializer,FavouriteSerializer,RegistrationSerializers
 from rest_framework.response import Response
 from .models import Book,Favourite
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication,BasicAuthentication
 from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly,AllowAny
 #---------------------------------------------------------token based auth --------------------------------------------#######
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -53,7 +53,7 @@ def logout(request):
 
 
 @api_view(['GET','POST','PATCH','DELETE','PUT'])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([BasicAuthentication])
 @permission_classes([IsAuthenticated,IsAuthenticatedOrReadOnly])
 def book_api(request,pk=None):
     if request.method == "GET":
